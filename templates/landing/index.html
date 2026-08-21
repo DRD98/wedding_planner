@@ -1,0 +1,503 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- ================================================================= -->
+<!-- SECTION 0: FULL-SCREEN HERO COVER WITH PHOTO BACKGROUND          -->
+<!-- ================================================================= -->
+<section class="hero-cover-section" id="cover">
+    <div class="hero-cover-bg-wrap">
+        <!-- <div class="hero-cover-image" style="background-image: url('{% static 'images/hero-bg.png' %}');" role="img" aria-label="{{ couple.partner_one }} and {{ couple.partner_two }}"></div> -->
+        <div
+            class="hero-cover-image"
+            style="background-image: url('{% static "images/hero-bg.png" %}');"
+            role="img"
+            aria-label="{{ couple.partner_one }} and {{ couple.partner_two }}">
+        </div>
+        <div class="hero-cover-overlay"></div>
+    </div>
+
+    <div class="hero-cover-content">
+        <!-- Eyebrow / Tagline -->
+        <div class="hero-eyebrow">
+            <span class="hero-eyebrow-line"></span>
+            <span class="hero-eyebrow-text">{{ couple.tagline|default:"We are getting married" }}</span>
+            <span class="hero-eyebrow-line"></span>
+        </div>
+
+        <!-- Couple Names (Primary Visual Focus) -->
+        <div class="hero-couple-names-wrap">
+            <h1 class="hero-couple-name">{{ couple.partner_one }}</h1>
+            <div class="hero-name-divider">
+                <span class="hero-ampersand">&amp;</span>
+            </div>
+            <h1 class="hero-couple-name">{{ couple.partner_two }}</h1>
+        </div>
+
+        <!-- Romantic Wedding Phrase -->
+        <p class="hero-phrase">
+            &ldquo;{{ couple.hero_phrase|default:"Two lives, two hearts, joined together in friendship, united forever in love." }}&rdquo;
+        </p>
+
+        <!-- Wedding Date & Venue Accent Tag -->
+        <div class="hero-date-badge">
+            <span class="hero-date-ornament">✦</span>
+            <span class="hero-date-text">{{ event.date }}</span>
+            <span class="hero-date-separator">&bull;</span>
+            <span class="hero-venue-text">{{ event.venue_name }}</span>
+            <span class="hero-date-ornament">✦</span>
+        </div>
+
+        <!-- Action / Explore button -->
+        <div class="hero-cta-group">
+            <a href="#invitation" class="hero-btn-primary">
+                <span>View Full Invitation</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Animated Subtle Scroll Indicator -->
+    <a href="#invitation" class="hero-scroll-indicator" aria-label="Scroll down to invitation">
+        <span class="scroll-mouse">
+            <span class="scroll-wheel"></span>
+        </span>
+        <span class="scroll-label">Scroll to explore</span>
+        <svg class="scroll-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </a>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 1: HERO / DIGITAL WEDDING INVITATION CARD                 -->
+<!-- ================================================================= -->
+<section class="hero-section" id="invitation">
+    <div class="hero-container">
+        <!-- Floating Floral Accents (CSS/SVG) -->
+        <div class="floral-accent floral-top-left" aria-hidden="true"></div>
+        <div class="floral-accent floral-bottom-right" aria-hidden="true"></div>
+
+        <!-- The Invitation Card Frame -->
+        <div class="invitation-card" id="invitationCard">
+            <!-- Ornate Corner Embellishments -->
+            <div class="card-corner corner-top-left" aria-hidden="true">
+                <svg viewBox="0 0 100 100" width="60" height="60">
+                    <path d="M0,0 L100,0 C60,0 20,40 0,100 Z" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="25" cy="25" r="4" fill="currentColor" />
+                    <path d="M5,5 Q40,5 40,40 Q5,40 5,5" fill="none" stroke="currentColor" stroke-width="1" />
+                </svg>
+            </div>
+            <div class="card-corner corner-top-right" aria-hidden="true">
+                <svg viewBox="0 0 100 100" width="60" height="60">
+                    <path d="M100,0 L0,0 C40,0 80,40 100,100 Z" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="75" cy="25" r="4" fill="currentColor" />
+                    <path d="M95,5 Q60,5 60,40 Q95,40 95,5" fill="none" stroke="currentColor" stroke-width="1" />
+                </svg>
+            </div>
+            <div class="card-corner corner-bottom-left" aria-hidden="true">
+                <svg viewBox="0 0 100 100" width="60" height="60">
+                    <path d="M0,100 L100,100 C60,100 20,60 0,0 Z" fill="none" stroke="currentColor"
+                        stroke-width="1.5" />
+                    <circle cx="25" cy="75" r="4" fill="currentColor" />
+                    <path d="M5,95 Q40,95 40,60 Q5,60 5,95" fill="none" stroke="currentColor" stroke-width="1" />
+                </svg>
+            </div>
+            <div class="card-corner corner-bottom-right" aria-hidden="true">
+                <svg viewBox="0 0 100 100" width="60" height="60">
+                    <path d="M100,100 L0,100 C40,100 80,60 100,0 Z" fill="none" stroke="currentColor"
+                        stroke-width="1.5" />
+                    <circle cx="75" cy="75" r="4" fill="currentColor" />
+                    <path d="M95,95 Q60,95 60,60 Q95,60 95,95" fill="none" stroke="currentColor" stroke-width="1" />
+                </svg>
+            </div>
+
+            <!-- Inner Champagne & Maroon Foil Border -->
+            <div class="card-inner-frame">
+                <!-- Top Wax Seal Monogram -->
+                <div class="wax-seal-wrapper">
+                    <div class="wax-seal" title="{{ couple.monogram }}">
+                        <span class="wax-seal-text">{{ couple.monogram }}</span>
+                    </div>
+                </div>
+
+                <!-- Invitation Header Subtitle -->
+                <p class="invite-pretitle">Together with their families</p>
+
+                <!-- Couple Names in Luxury Serif -->
+                <div class="couple-names-block">
+                    <h1 class="partner-name partner-one">{{ couple.partner_one_full }}</h1>
+                    <div class="name-connector">
+                        <span class="divider-line"></span>
+                        <span class="ampersand">&amp;</span>
+                        <span class="divider-line"></span>
+                    </div>
+                    <h1 class="partner-name partner-two">{{ couple.partner_two_full }}</h1>
+                </div>
+
+                <!-- Invitation Copy -->
+                <p class="invite-statement">
+                    {{ couple.invitation_text }}
+                </p>
+
+                <!-- Date & Venue Highlight -->
+                <div class="wedding-details-banner">
+                    <div class="ornament-divider">
+                        <span class="diamond-dot">◆</span>
+                    </div>
+                    <p class="wedding-date-text">{{ event.date }}</p>
+                    <p class="wedding-time-text">at {{ event.time }} in the Morning</p>
+                    <div class="ornament-divider">
+                        <span class="diamond-dot">◆</span>
+                    </div>
+                    <p class="wedding-venue-text">
+                        <svg class="pin-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <strong>{{ event.venue_name }}</strong> &bull; {{ event.venue_address }}
+                    </p>
+                </div>
+
+                <!-- Live Countdown Timer -->
+                <div class="countdown-container" id="countdownWrapper" data-target-date="{{ event.iso_date }}">
+                    <div class="countdown-header">Counting Down To The Big Day</div>
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <div class="countdown-value-box">
+                                <span class="countdown-value" id="cdDays">00</span>
+                            </div>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-colon">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value-box">
+                                <span class="countdown-value" id="cdHours">00</span>
+                            </div>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-colon">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value-box">
+                                <span class="countdown-value" id="cdMinutes">00</span>
+                            </div>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-colon">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value-box">
+                                <span class="countdown-value" id="cdSeconds">00</span>
+                            </div>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Buttons -->
+                <div class="card-actions">
+
+                    <a href="#venues" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                            <line x1="8" y1="2" x2="8" y2="18"></line>
+                            <line x1="16" y1="6" x2="16" y2="22"></line>
+                        </svg>
+                        <span>View Venue &amp; Directions</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 2: OUR LOVE STORY                                         -->
+<!-- ================================================================= -->
+<section class="section-container story-section" id="story">
+    <div class="section-header">
+        <span class="section-subtitle">How It All Began</span>
+        <h2 class="section-title">Our Love Story</h2>
+        <div class="title-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-heart">❦</span>
+            <span class="ornament-line"></span>
+        </div>
+    </div>
+
+    <div class="timeline-container">
+        {% for chapter in story %}
+        <div class="timeline-card">
+            <div class="timeline-badge-year">{{ chapter.year }}</div>
+            <div class="timeline-content">
+                <span class="timeline-tag">{{ chapter.badge }}</span>
+                <h3 class="timeline-title">{{ chapter.title }}</h3>
+                <p class="timeline-description">{{ chapter.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 3: EVENTS & SCHEDULE                                      -->
+<!-- ================================================================= -->
+<section class="section-container schedule-section" id="schedule">
+    <div class="section-header">
+        <span class="section-subtitle">The Day's Flow</span>
+        <h2 class="section-title">Schedule of Events</h2>
+        <div class="title-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-heart">❦</span>
+            <span class="ornament-line"></span>
+        </div>
+        <p class="section-desc">We have crafted moments filled with love, prayer, and joyous fellowship.</p>
+    </div>
+
+    <div class="schedule-grid">
+        {% for item in schedule %}
+        <div class="schedule-card">
+            <div class="schedule-time-badge">
+                <svg class="schedule-clock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>{{ item.time }}</span>
+            </div>
+            <div class="schedule-body">
+                <h3 class="schedule-title">{{ item.title }}</h3>
+                <span class="schedule-subtitle">{{ item.subtitle }}</span>
+                <p class="schedule-desc">{{ item.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 4: CELEBRATION VENUES & LOCATIONS                         -->
+<!-- ================================================================= -->
+<section class="section-container venues-section" id="venues">
+    <div class="section-header">
+        <span class="section-subtitle">Locations &amp; Timings</span>
+        <h2 class="section-title">Celebration Venues</h2>
+        <div class="title-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-heart">❦</span>
+            <span class="ornament-line"></span>
+        </div>
+        <p class="section-desc">Details for our Church services and celebratory dining halls for both the Engagement and
+            Wedding days.</p>
+    </div>
+
+    <div class="venues-dual-grid">
+        {% for ev in events_venues %}
+        <div class="event-venue-card">
+            <div class="event-card-header">
+                <span class="event-badge">{{ ev.badge }}</span>
+                <h3 class="event-card-title">{{ ev.title }}</h3>
+                <p class="event-card-date">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>{{ ev.date }}</span>
+                </p>
+            </div>
+
+            <div class="locations-pair-container">
+                <!-- Location 1: Church Service -->
+                <div class="location-subcard church-subcard">
+                    <div class="location-subcard-header">
+                        <div class="location-icon-badge church-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M12 2v20M8 7h8M4 22h16M7 22V12a5 5 0 0 1 10 0v10"></path>
+                            </svg>
+                        </div>
+                        <div class="location-role-group">
+                            <span class="location-role-tag">{{ ev.church.role }}</span>
+                            <h4 class="location-name">{{ ev.church.name }}</h4>
+                        </div>
+                    </div>
+                    <div class="location-meta">
+                        <p class="location-time">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{{ ev.church.time }}</span>
+                        </p>
+                        <p class="location-address">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>{{ ev.church.address }}</span>
+                        </p>
+                    </div>
+                    <a href="{{ ev.church.google_maps_url }}" target="_blank" rel="noopener" class="btn btn-map-link">
+                        <span>Get Directions (Church)</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Location 2: Dining Hall / Banquet -->
+                <div class="location-subcard hall-subcard">
+                    <div class="location-subcard-header">
+                        <div class="location-icon-badge hall-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                <line x1="6" y1="1" x2="6" y2="4"></line>
+                                <line x1="10" y1="1" x2="10" y2="4"></line>
+                                <line x1="14" y1="1" x2="14" y2="4"></line>
+                            </svg>
+                        </div>
+                        <div class="location-role-group">
+                            <span class="location-role-tag">{{ ev.hall.role }}</span>
+                            <h4 class="location-name">{{ ev.hall.name }}</h4>
+                        </div>
+                    </div>
+                    <div class="location-meta">
+                        <p class="location-time">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{{ ev.hall.time }}</span>
+                        </p>
+                        <p class="location-address">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>{{ ev.hall.address }}</span>
+                        </p>
+                    </div>
+                    <a href="{{ ev.hall.google_maps_url }}" target="_blank" rel="noopener" class="btn btn-map-link">
+                        <span>Get Directions (Dining Hall)</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 5: DETAILS & ATTIRE                                       -->
+<!-- ================================================================= -->
+<section class="section-container details-section" id="details">
+    <div class="section-header">
+        <span class="section-subtitle">Good to Know</span>
+        <h2 class="section-title">Important Details</h2>
+        <div class="title-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-heart">❦</span>
+            <span class="ornament-line"></span>
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <!-- Dress Code Card -->
+        <div class="detail-card dress-code-card">
+            <div class="detail-card-icon">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path
+                        d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l1.86 11.16A2 2 0 0 0 6.1 19h11.8a2 2 0 0 0 1.96-2.15l1.86-11.16a2 2 0 0 0-1.34-2.23z" />
+                </svg>
+            </div>
+            <h3 class="detail-card-title">Dress Code</h3>
+            <h4 class="dress-code-headline">{{ dress_code.title }}</h4>
+            <p class="detail-card-text">{{ dress_code.description }}</p>
+
+            <div class="color-palette-guide">
+                <span class="palette-label">Suggested Palette:</span>
+                <div class="swatches-container">
+                    {% for color in dress_code.colors %}
+                    <div class="color-swatch-wrapper" title="{{ color.name }}">
+                        <span class="color-swatch" style="--swatch-color: {{ color.hex }};"></span>
+                        <span class="swatch-name">{{ color.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Cards -->
+        {% for note in notes %}
+        <div class="detail-card note-card">
+            <div class="detail-card-icon">
+                {% if forloop.first %}
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                {% else %}
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
+                    <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
+                    <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path>
+                </svg>
+                {% endif %}
+            </div>
+            <h3 class="detail-card-title">{{ note.title }}</h3>
+            <p class="detail-card-text">{{ note.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================================================================= -->
+<!-- SECTION 6: FOOTER                                                 -->
+<!-- ================================================================= -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-seal">
+            <span class="footer-monogram">{{ couple.monogram }}</span>
+        </div>
+        <h3 class="footer-couple-name">{{ couple.partner_one }} &amp; {{ couple.partner_two }}</h3>
+        <p class="footer-message">We cannot wait to celebrate our special day with you.</p>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom-row">
+            <p class="copyright">&copy; 2027 {{ couple.partner_one }} &amp; {{ couple.partner_two }}. Crafted with love.
+            </p>
+            <div class="footer-auth-link">
+                <a href="{% url 'login' %}" class="portal-link">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Couple &amp; Planner Portal Login</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{{ couple.partner_one }} &amp; {{ couple.partner_two }} — Digital Wedding Invitation{% endblock %}</title>
+    <meta name="description" content="You are cordially invited to celebrate the wedding of {{ couple.partner_one_full }} and {{ couple.partner_two_full }} on {{ event.date }} at {{ event.venue_name }}.">
+    <meta name="theme-color" content="#FAF7F2">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="{{ couple.partner_one }} &amp; {{ couple.partner_two }}'s Wedding Invitation">
+    <meta property="og:description" content="Celebrate with us on {{ event.date }} at {{ event.venue_name }}.">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts: Cormorant Garamond, Cinzel Decorative, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/invitation.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="invitation-body">
+    <!-- Ambient Background Elements -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+    <!-- Navigation Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-container">
+            <a href="{% url 'landing_page' %}" class="monogram-logo" aria-label="Couple Monogram">
+                <span class="monogram-frame">{{ couple.monogram|default:"A & D" }}</span>
+            </a>
+
+            <nav class="desktop-nav" aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="#cover" class="nav-link">Home</a></li>
+                    <li><a href="#invitation" class="nav-link">Invitation</a></li>
+                    <li><a href="#story" class="nav-link">Our Story</a></li>
+                    <li><a href="#schedule" class="nav-link">Schedule</a></li>
+                    <li><a href="#venues" class="nav-link">Venues</a></li>
+                    <li><a href="#details" class="nav-link">Details</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="{% url 'login' %}" class="btn-login" id="loginBtn">
+                    <svg class="login-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    <span>Log In</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Drawer -->
+        <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+            <div class="mobile-nav-inner">
+                <div class="mobile-monogram">{{ couple.monogram|default:"A & D" }}</div>
+                <ul class="mobile-links">
+                    <li><a href="#cover" class="mobile-link">Home</a></li>
+                    <li><a href="#invitation" class="mobile-link">Invitation</a></li>
+                    <li><a href="#story" class="mobile-link">Our Story</a></li>
+                    <li><a href="#schedule" class="mobile-link">Schedule</a></li>
+                    <li><a href="#venues" class="mobile-link">Venues</a></li>
+                    <li><a href="#details" class="mobile-link">Details</a></li>
+                </ul>
+                <div class="mobile-drawer-footer">
+                    <a href="{% url 'login' %}" class="btn-login mobile-login-btn">
+                        <svg class="login-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10 17 15 12 10 7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg>
+                        <span>Planner / Couple Log In</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="mainContent" class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Back to top floating button -->
+    <button class="btn-back-to-top" id="backToTopBtn" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <!-- Global Scripts -->
+    <script src="{% static 'js/invitation.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
