@@ -7,55 +7,19 @@
 <!-- ================================================================= -->
 <section class="hero-cover-section" id="cover">
     <div class="hero-cover-bg-wrap">
-        <!-- <div class="hero-cover-image" style="background-image: url('{% static 'images/hero-bg.png' %}');" role="img" aria-label="{{ couple.partner_one }} and {{ couple.partner_two }}"></div> -->
-        <div
-            class="hero-cover-image"
-            style="background-image: url('{% static "images/hero-bg.png" %}');"
-            role="img"
+        <div class="hero-cover-image" style="background-image: url('{% static "images/hero-bg.png" %}');" role="img"
             aria-label="{{ couple.partner_one }} and {{ couple.partner_two }}">
         </div>
         <div class="hero-cover-overlay"></div>
     </div>
 
     <div class="hero-cover-content">
-        <!-- Eyebrow / Tagline -->
-        <div class="hero-eyebrow">
-            <span class="hero-eyebrow-line"></span>
-            <span class="hero-eyebrow-text">{{ couple.tagline|default:"We are getting married" }}</span>
-            <span class="hero-eyebrow-line"></span>
-        </div>
-
-        <!-- Couple Names (Primary Visual Focus) -->
-        <div class="hero-couple-names-wrap">
-            <h1 class="hero-couple-name">{{ couple.partner_one }}</h1>
-            <div class="hero-name-divider">
+        <div class="hero-romantic-header">
+            <h1 class="hero-romantic-names">
+                <span class="hero-name">{{ couple.partner_one }}</span>
                 <span class="hero-ampersand">&amp;</span>
-            </div>
-            <h1 class="hero-couple-name">{{ couple.partner_two }}</h1>
-        </div>
-
-        <!-- Romantic Wedding Phrase -->
-        <p class="hero-phrase">
-            &ldquo;{{ couple.hero_phrase|default:"Two lives, two hearts, joined together in friendship, united forever in love." }}&rdquo;
-        </p>
-
-        <!-- Wedding Date & Venue Accent Tag -->
-        <div class="hero-date-badge">
-            <span class="hero-date-ornament">✦</span>
-            <span class="hero-date-text">{{ event.date }}</span>
-            <span class="hero-date-separator">&bull;</span>
-            <span class="hero-venue-text">{{ event.venue_name }}</span>
-            <span class="hero-date-ornament">✦</span>
-        </div>
-
-        <!-- Action / Explore button -->
-        <div class="hero-cta-group">
-            <a href="#invitation" class="hero-btn-primary">
-                <span>View Full Invitation</span>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </a>
+                <span class="hero-name">{{ couple.partner_two }}</span>
+            </h1>
         </div>
     </div>
 
@@ -65,7 +29,8 @@
             <span class="scroll-wheel"></span>
         </span>
         <span class="scroll-label">Scroll to explore</span>
-        <svg class="scroll-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="scroll-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+            stroke-width="2">
             <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
     </a>
@@ -231,7 +196,15 @@
     <div class="timeline-container">
         {% for chapter in story %}
         <div class="timeline-card">
+            {% if not chapter.multi_year %}
             <div class="timeline-badge-year">{{ chapter.year }}</div>
+            {% else %}
+            <div class="timeline-badge-year multi-year">
+                <span>{{ chapter.year1 }}</span>
+                <span> - </span>
+                <span>{{ chapter.year2 }}</span>
+            </div>
+            {% endif %}
             <div class="timeline-content">
                 <span class="timeline-tag">{{ chapter.badge }}</span>
                 <h3 class="timeline-title">{{ chapter.title }}</h3>
@@ -260,13 +233,27 @@
     <div class="schedule-grid">
         {% for item in schedule %}
         <div class="schedule-card">
-            <div class="schedule-time-badge">
-                <svg class="schedule-clock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span>{{ item.time }}</span>
+            <div class="schedule-card-meta">
+                {% if item.date %}
+                <div class="schedule-date-badge">
+                    <svg class="schedule-date-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>{{ item.date }}</span>
+                </div>
+                {% endif %}
+                <div class="schedule-time-badge">
+                    <svg class="schedule-clock-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>{{ item.time }}</span>
+                </div>
             </div>
             <div class="schedule-body">
                 <h3 class="schedule-title">{{ item.title }}</h3>
@@ -402,71 +389,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- ================================================================= -->
-<!-- SECTION 5: DETAILS & ATTIRE                                       -->
-<!-- ================================================================= -->
-<section class="section-container details-section" id="details">
-    <div class="section-header">
-        <span class="section-subtitle">Good to Know</span>
-        <h2 class="section-title">Important Details</h2>
-        <div class="title-ornament">
-            <span class="ornament-line"></span>
-            <span class="ornament-heart">❦</span>
-            <span class="ornament-line"></span>
-        </div>
-    </div>
-
-    <div class="details-grid">
-        <!-- Dress Code Card -->
-        <div class="detail-card dress-code-card">
-            <div class="detail-card-icon">
-                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path
-                        d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l1.86 11.16A2 2 0 0 0 6.1 19h11.8a2 2 0 0 0 1.96-2.15l1.86-11.16a2 2 0 0 0-1.34-2.23z" />
-                </svg>
-            </div>
-            <h3 class="detail-card-title">Dress Code</h3>
-            <h4 class="dress-code-headline">{{ dress_code.title }}</h4>
-            <p class="detail-card-text">{{ dress_code.description }}</p>
-
-            <div class="color-palette-guide">
-                <span class="palette-label">Suggested Palette:</span>
-                <div class="swatches-container">
-                    {% for color in dress_code.colors %}
-                    <div class="color-swatch-wrapper" title="{{ color.name }}">
-                        <span class="color-swatch" style="--swatch-color: {{ color.hex }};"></span>
-                        <span class="swatch-name">{{ color.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Notes Cards -->
-        {% for note in notes %}
-        <div class="detail-card note-card">
-            <div class="detail-card-icon">
-                {% if forloop.first %}
-                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                </svg>
-                {% else %}
-                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
-                    <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
-                    <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path>
-                </svg>
-                {% endif %}
-            </div>
-            <h3 class="detail-card-title">{{ note.title }}</h3>
-            <p class="detail-card-text">{{ note.content }}</p>
         </div>
         {% endfor %}
     </div>

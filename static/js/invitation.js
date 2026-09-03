@@ -3,11 +3,13 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initHeaderScroll();
     initCountdown();
     initMobileNavigation();
     initCalendarDropdown();
     initBackToTop();
     initSmoothScroll();
+    initPasswordToggle();
 });
 
 /**
@@ -234,3 +236,53 @@ function initSmoothScroll() {
         });
     });
 }
+
+/**
+ * 6. Header Scrolled State (Translucent to Frosted)
+ */
+function initHeaderScroll() {
+    const siteHeader = document.getElementById('siteHeader');
+    if (!siteHeader) return;
+
+    function handleScroll() {
+        if (window.scrollY > 60) {
+            siteHeader.classList.add('scrolled');
+        } else {
+            siteHeader.classList.remove('scrolled');
+        }
+    }
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+}
+
+/**
+ * 7. Password Visibility Toggle
+ */
+function initPasswordToggle() {
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const passwordInput = document.getElementById('id_password');
+    if (!toggleBtn || !passwordInput) return;
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+        const showIcon = toggleBtn.querySelector('.eye-show');
+        const hideIcon = toggleBtn.querySelector('.eye-hide');
+
+        if (isPassword) {
+            if (showIcon) showIcon.style.display = 'none';
+            if (hideIcon) hideIcon.style.display = 'block';
+            toggleBtn.setAttribute('aria-label', 'Hide password');
+            toggleBtn.setAttribute('title', 'Hide password');
+        } else {
+            if (showIcon) showIcon.style.display = 'block';
+            if (hideIcon) hideIcon.style.display = 'none';
+            toggleBtn.setAttribute('aria-label', 'Show password');
+            toggleBtn.setAttribute('title', 'Show password');
+        }
+    });
+}
+
