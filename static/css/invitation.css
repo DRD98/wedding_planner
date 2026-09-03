@@ -1,0 +1,1945 @@
+/* ==========================================================================
+   WEDDING PLANNER - DIGITAL INVITATION & LANDING PAGE STYLESHEET
+   Design Theme: Luxury Champagne & Royal Dark Red / Maroon
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    /* Base Backgrounds & Surfaces */
+    --color-bg-base: #FAF5F0;
+    --color-bg-warm: #F4EAE0;
+    --color-bg-champagne: #F9EFE4;
+    --color-card-bg: #FFFFFF;
+    --color-card-inner: #FFFEFC;
+
+    /* Royal Dark Red / Maroon Palette */
+    --color-maroon: #681A24;
+    --color-maroon-dark: #450D15;
+    --color-maroon-deep: #30080E;
+    --color-maroon-light: #8E2B38;
+    --color-maroon-soft: rgba(104, 26, 36, 0.08);
+    --color-maroon-border: rgba(104, 26, 36, 0.22);
+
+    /* Champagne Gold & Metallics */
+    --color-champagne: #F7E7CE;
+    --color-champagne-light: #FCF7EE;
+    --color-champagne-gold: #C5A059;
+    --color-gold-bright: #D4AF37;
+    --color-gold-deep: #A88232;
+    --color-gold-border: rgba(197, 160, 89, 0.38);
+
+    /* Gradients */
+    --gold-gradient: linear-gradient(135deg, #F0D597 0%, #D4AF37 35%, #B88B2A 70%, #F5DE98 100%);
+    --maroon-gradient: linear-gradient(135deg, #7E222E 0%, #681A24 45%, #450D15 100%);
+    --maroon-gradient-hover: linear-gradient(135deg, #8E2B38 0%, #761E29 45%, #521019 100%);
+    --champagne-gradient: linear-gradient(135deg, #FAF2E6 0%, #F4E4CE 50%, #EBD0B0 100%);
+    --gold-foil-border: linear-gradient(135deg, #ECC87A, #C5A059, #F5E2B3, #A88232);
+
+    /* Typography Inks */
+    --color-text-title: #231815;
+    --color-text-body: #4A423F;
+    --color-text-muted: #7B726E;
+    --color-text-light: #A59C98;
+
+    /* Font Families */
+    --font-serif-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-serif-heading: 'Playfair Display', 'Cormorant Garamond', serif;
+    --font-decorative: 'Cinzel Decorative', serif;
+    --font-script: 'Alex Brush', 'Pinyon Script', 'Great Vibes', cursive;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Shadows & Elevations */
+    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 16px 45px -10px rgba(69, 13, 21, 0.08), 0 0 1px rgba(104, 26, 36, 0.25);
+    --shadow-maroon: 0 8px 25px rgba(104, 26, 36, 0.28);
+    --shadow-maroon-hover: 0 12px 32px rgba(104, 26, 36, 0.38);
+    --shadow-floating: 0 20px 50px rgba(48, 8, 14, 0.12);
+
+    /* Layout & Transitions */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+    --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Global Styles
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body.invitation-body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-base);
+    color: var(--color-text-body);
+    line-height: 1.65;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle background texture pattern */
+body.invitation-body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(rgba(104, 26, 36, 0.12) 0.6px, transparent 0.6px),
+        radial-gradient(rgba(197, 160, 89, 0.15) 0.6px, transparent 0.6px);
+    background-size: 36px 36px;
+    background-position: 0 0, 18px 18px;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ambient glow blobs */
+.ambient-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glow-1 {
+    top: -120px;
+    right: -100px;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, #8E2B38, transparent);
+}
+
+.glow-2 {
+    bottom: 8%;
+    left: -150px;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, #ECC87A, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   3. Navigation Header & Monogram
+   -------------------------------------------------------------------------- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(25, 4, 8, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(247, 231, 206, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.site-header.scrolled {
+    background: rgba(250, 245, 240, 0.95);
+    border-bottom: 1px solid var(--color-maroon-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Monogram Logo - Royal Maroon & Champagne */
+.monogram-logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.monogram-frame {
+    font-family: var(--font-serif-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--color-champagne);
+    padding: 0.35rem 0.95rem;
+    border: 1px solid rgba(247, 231, 206, 0.4);
+    border-radius: var(--radius-sm);
+    background: var(--maroon-gradient);
+    box-shadow: 0 4px 14px rgba(69, 13, 21, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: var(--transition-smooth);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.monogram-logo:hover .monogram-frame {
+    background: var(--maroon-gradient-hover);
+    box-shadow: 0 6px 18px rgba(104, 26, 36, 0.45);
+    border-color: var(--color-champagne-gold);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.site-header.scrolled .monogram-frame {
+    background: var(--maroon-gradient);
+    color: var(--color-champagne);
+    border-color: var(--color-maroon-border);
+}
+
+/* Desktop Navigation */
+.desktop-nav .nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-champagne-light);
+    position: relative;
+    padding: 0.4rem 0;
+    transition: var(--transition-smooth);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.site-header.scrolled .nav-link {
+    color: var(--color-text-body);
+    text-shadow: none;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-champagne-gold);
+    transition: var(--transition-smooth);
+    transform: translateX(-50%);
+}
+
+.site-header.scrolled .nav-link::after {
+    background: var(--maroon-gradient);
+}
+
+.nav-link:hover {
+    color: #FFFFFF;
+}
+
+.site-header.scrolled .nav-link:hover {
+    color: var(--color-maroon);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Header Actions & Login Button */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.35rem;
+    background: var(--maroon-gradient);
+    color: var(--color-champagne);
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    transition: var(--transition-bounce);
+    border: 1px solid rgba(247, 231, 206, 0.35);
+}
+
+.btn-login:hover {
+    background: var(--maroon-gradient-hover);
+    box-shadow: var(--shadow-maroon-hover);
+    color: #FFFFFF;
+    border-color: var(--color-champagne);
+    transform: translateY(-2px);
+}
+
+.btn-login .login-icon {
+    stroke: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.btn-login:hover .login-icon {
+    transform: translateX(2px);
+}
+
+/* Mobile Toggle Hamburger */
+.mobile-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-sm);
+    width: 40px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+    transition: var(--transition-smooth);
+}
+
+.mobile-toggle .bar {
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-maroon);
+    transition: var(--transition-smooth);
+    border-radius: 2px;
+}
+
+.mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Navigation Drawer */
+.mobile-nav-drawer {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(250, 245, 240, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-maroon-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s ease-in-out;
+}
+
+.mobile-nav-drawer.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-inner {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.mobile-monogram {
+    font-family: var(--font-serif-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-maroon);
+    margin-bottom: 1.5rem;
+}
+
+.mobile-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.mobile-link {
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-title);
+    transition: var(--transition-smooth);
+}
+
+.mobile-link:hover {
+    color: var(--color-maroon);
+}
+
+.mobile-login-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Main Content & Sections
+   -------------------------------------------------------------------------- */
+.main-content {
+    position: relative;
+    z-index: 1;
+    padding-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+/* --------------------------------------------------------------------------
+   4A. Hero Cover: Fullscreen Romantic Wedding Invitation Cover
+   -------------------------------------------------------------------------- */
+.hero-cover-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: 4rem clamp(18rem, 7vw, 7.5rem) 2.5rem clamp(2rem, 7vw, 7.5rem);
+    box-sizing: border-box;
+}
+
+.hero-cover-bg-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero-cover-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+    transform: scale(1);
+    transition: transform 8s ease-out;
+}
+
+.hero-cover-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* background:
+        linear-gradient(180deg,
+            rgba(20, 4, 8, 0.45) 0%,
+            rgba(20, 4, 8, 0.12) 30%,
+            rgba(20, 4, 8, 0.25) 70%,
+            rgba(20, 4, 8, 0.6) 100%),
+        linear-gradient(270deg,
+            rgba(20, 4, 8, 0.45) 0%,
+            rgba(20, 4, 8, 0.15) 50%,
+            transparent 100%); */
+    pointer-events: none;
+}
+
+.hero-cover-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 100%;
+    margin: auto 0 auto auto;
+    text-align: right;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    animation: heroFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-romantic-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    text-align: right;
+}
+
+.hero-romantic-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    font-family: var(--font-script);
+    font-size: clamp(3.8rem, 8.5vw, 7.2rem);
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    text-align: right;
+    text-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.85),
+        0 2px 10px rgba(0, 0, 0, 0.9),
+        0 0 45px rgba(104, 26, 36, 0.45);
+    user-select: none;
+}
+
+.hero-romantic-names .hero-name {
+    color: #FFFFFF;
+    display: block;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.75));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.hero-romantic-names:hover .hero-name {
+    transform: translateY(-2px);
+}
+
+.hero-romantic-names .hero-ampersand {
+    font-family: var(--font-script);
+    font-size: clamp(3rem, 6.5vw, 5.2rem);
+    font-weight: 400;
+    color: var(--color-champagne);
+    text-shadow:
+        0 2px 20px rgba(0, 0, 0, 0.85),
+        0 0 25px rgba(197, 160, 89, 0.4);
+    margin: 0 0.8rem 0 0;
+    display: block;
+    line-height: 0.9;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    color: var(--color-champagne);
+    opacity: 0.88;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.hero-scroll-indicator:hover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(3px);
+    color: #FFFFFF;
+}
+
+.scroll-mouse {
+    width: 22px;
+    height: 34px;
+    border: 2px solid var(--color-champagne);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-wheel {
+    width: 3px;
+    height: 7px;
+    background: var(--color-champagne);
+    border-radius: 2px;
+    animation: scrollWheelPulse 1.8s infinite ease-in-out;
+}
+
+.scroll-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    margin-top: 0.15rem;
+}
+
+.scroll-arrow {
+    animation: scrollArrowBounce 1.8s infinite ease-in-out;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+}
+
+@keyframes scrollWheelPulse {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(6px);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scrollArrowBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+@keyframes heroFadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5.5rem 1.5rem;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem auto;
+}
+
+.section-subtitle {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: var(--font-serif-heading);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 400;
+    color: var(--color-text-title);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.section-desc {
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+}
+
+/* Ornaments & Dividers */
+.title-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    color: var(--color-maroon);
+}
+
+.ornament-line {
+    display: inline-block;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-maroon), transparent);
+}
+
+.ornament-heart {
+    font-size: 1rem;
+    color: var(--color-maroon);
+}
+
+.ornament-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.75rem 0;
+    color: var(--color-maroon);
+}
+
+.diamond-dot {
+    font-size: 0.65rem;
+    color: var(--color-maroon);
+    opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero: Digital Wedding Card (The Invitation)
+   -------------------------------------------------------------------------- */
+.hero-section {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem 5rem 1.5rem;
+    position: relative;
+}
+
+.hero-container {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* The Grand Invitation Card */
+.invitation-card {
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    padding: 18px;
+    border: 1px solid var(--color-maroon-border);
+    transition: var(--transition-smooth);
+}
+
+.invitation-card:hover {
+    box-shadow: var(--shadow-floating), 0 0 0 1px rgba(104, 26, 36, 0.35);
+}
+
+/* Ornate Corner SVGs */
+.card-corner {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    color: var(--color-maroon);
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.corner-top-left {
+    top: 12px;
+    left: 12px;
+}
+
+.corner-top-right {
+    top: 12px;
+    right: 12px;
+}
+
+.corner-bottom-left {
+    bottom: 12px;
+    left: 12px;
+}
+
+.corner-bottom-right {
+    bottom: 12px;
+    right: 12px;
+}
+
+/* Inner Champagne Frame */
+.card-inner-frame {
+    background-color: var(--color-card-inner);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: calc(var(--radius-lg) - 6px);
+    padding: 3.5rem 3rem 3rem 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Wax Seal Monogram in Royal Maroon & Gold */
+.wax-seal-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.wax-seal {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #8E2B38, #681A24 55%, #38070E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.45),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+        0 6px 18px rgba(69, 13, 21, 0.45);
+    border: 2px dashed rgba(247, 231, 206, 0.55);
+    text-decoration: none;
+    transition: var(--transition-bounce);
+    cursor: default;
+}
+
+.wax-seal-text {
+    font-family: var(--font-serif-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #F7E7CE;
+    letter-spacing: 0.08em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.wax-seal:hover {
+    transform: scale(1.06) rotate(3deg);
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+        0 10px 24px rgba(69, 13, 21, 0.55);
+}
+
+/* Invitation Typography */
+.invite-pretitle {
+    font-family: var(--font-serif-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-maroon);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.couple-names-block {
+    margin: 1.25rem 0 1.5rem 0;
+}
+
+.partner-name {
+    font-family: var(--font-serif-display);
+    font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+    font-weight: 400;
+    color: var(--color-text-title);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
+.name-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.name-connector .divider-line {
+    width: 60px;
+    height: 1px;
+    background: var(--maroon-gradient);
+}
+
+.name-connector .ampersand {
+    font-family: var(--font-serif-display);
+    font-size: 2.2rem;
+    font-style: italic;
+    color: var(--color-maroon);
+    line-height: 1;
+}
+
+.invite-statement {
+    font-family: var(--font-serif-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--color-text-body);
+    max-width: 540px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+/* Date & Location Highlight Banner */
+.wedding-details-banner {
+    background: var(--color-bg-champagne);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    margin: 0 auto 2.5rem auto;
+    max-width: 620px;
+}
+
+.wedding-date-text {
+    font-family: var(--font-serif-heading);
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-maroon-dark);
+}
+
+.wedding-time-text {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    margin-top: 0.2rem;
+}
+
+.wedding-venue-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 1.05rem;
+    color: var(--color-text-body);
+}
+
+.wedding-venue-text .pin-icon {
+    stroke: var(--color-maroon);
+}
+
+/* --------------------------------------------------------------------------
+   6. Countdown Timer
+   -------------------------------------------------------------------------- */
+.countdown-container {
+    margin: 2.5rem auto;
+    max-width: 580px;
+}
+
+.countdown-header {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    margin-bottom: 1rem;
+}
+
+.countdown-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 70px;
+    max-width: 100px;
+}
+
+.countdown-value-box {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 0.5rem;
+    box-shadow: 0 4px 12px rgba(104, 26, 36, 0.08);
+    transition: var(--transition-smooth);
+}
+
+.countdown-item:hover .countdown-value-box {
+    border-color: var(--color-maroon);
+    box-shadow: var(--shadow-maroon);
+    transform: translateY(-2px);
+}
+
+.countdown-value {
+    display: block;
+    font-family: var(--font-serif-heading);
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    line-height: 1;
+}
+
+.countdown-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+}
+
+.countdown-colon {
+    font-family: var(--font-serif-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons & Calendar Dropdown
+   -------------------------------------------------------------------------- */
+.card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.85rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+}
+
+.btn-primary {
+    background: var(--maroon-gradient);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: var(--shadow-maroon);
+}
+
+.btn-primary:hover {
+    background: var(--maroon-gradient-hover);
+    box-shadow: var(--shadow-maroon-hover);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #FFFFFF;
+    color: var(--color-maroon);
+    border: 1px solid var(--color-maroon-border);
+    box-shadow: var(--shadow-subtle);
+}
+
+.btn-secondary:hover {
+    background: var(--color-bg-champagne);
+    color: var(--color-maroon-dark);
+    border-color: var(--color-maroon);
+    box-shadow: var(--shadow-maroon);
+    transform: translateY(-2px);
+}
+
+/* Calendar Dropdown */
+.calendar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.calendar-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.calendar-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #FFFFFF;
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-floating);
+    min-width: 220px;
+    padding: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 50;
+}
+
+.calendar-dropdown.open .calendar-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.calendar-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    text-decoration: none;
+    color: var(--color-text-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+}
+
+.calendar-option:hover {
+    background: var(--color-bg-champagne);
+    color: var(--color-maroon);
+}
+
+/* --------------------------------------------------------------------------
+   8. Love Story Timeline
+   -------------------------------------------------------------------------- */
+.story-section {
+    position: relative;
+}
+
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 36px;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--color-maroon), transparent);
+}
+
+.timeline-card {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    position: relative;
+}
+
+.timeline-badge-year {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-card-bg);
+    border: 2px solid var(--color-maroon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    box-shadow: var(--shadow-maroon);
+    z-index: 2;
+    transition: var(--transition-smooth);
+}
+
+.multi-year {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+}
+
+.timeline-card:hover .timeline-badge-year {
+    transform: scale(1.08);
+    background: var(--maroon-gradient);
+    color: #FFFFFF;
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 2rem;
+    box-shadow: var(--shadow-subtle);
+    transition: var(--transition-smooth);
+}
+
+.timeline-card:hover .timeline-content {
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-maroon);
+    transform: translateX(4px);
+}
+
+.timeline-tag {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    background: var(--color-bg-champagne);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.6rem;
+}
+
+.timeline-title {
+    font-family: var(--font-serif-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-text-title);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+    color: var(--color-text-body);
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   9. Schedule / Itinerary
+   -------------------------------------------------------------------------- */
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem;
+}
+
+.schedule-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-subtle);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.schedule-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--maroon-gradient);
+    opacity: 0.6;
+    transition: var(--transition-smooth);
+}
+
+.schedule-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-4px);
+    border-color: var(--color-maroon);
+}
+
+.schedule-card:hover::before {
+    opacity: 1;
+    width: 6px;
+}
+
+.schedule-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.95rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--color-maroon-soft);
+}
+
+.schedule-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    background: var(--color-maroon-soft);
+    padding: 0.22rem 0.6rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-maroon-border);
+}
+
+.schedule-date-badge svg {
+    stroke: var(--color-maroon);
+    flex-shrink: 0;
+}
+
+.schedule-time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-gold-deep);
+}
+
+.schedule-time-badge svg {
+    stroke: var(--color-gold-deep);
+    flex-shrink: 0;
+}
+
+.schedule-title {
+    font-family: var(--font-serif-heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-text-title);
+    margin-bottom: 0.25rem;
+}
+
+.schedule-subtitle {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    margin-bottom: 0.75rem;
+}
+
+.schedule-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-body);
+    line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   10. Celebration Venues Section (Dual Cards: Engagement & Wedding Day)
+   -------------------------------------------------------------------------- */
+.venues-dual-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2.5rem;
+    align-items: stretch;
+}
+
+.event-venue-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.event-venue-card:hover {
+    box-shadow: var(--shadow-floating);
+    border-color: var(--color-maroon);
+    transform: translateY(-3px);
+}
+
+.event-card-header {
+    border-bottom: 1px solid rgba(104, 26, 36, 0.15);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.event-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    background: var(--color-bg-champagne);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.6rem;
+}
+
+.event-card-title {
+    font-family: var(--font-serif-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text-title);
+    margin-bottom: 0.35rem;
+}
+
+.event-card-date {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+}
+
+.event-card-date svg {
+    stroke: var(--color-maroon);
+}
+
+/* Pair of Location Sub-Cards (Church & Dining Hall) */
+.locations-pair-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.location-subcard {
+    background: var(--color-bg-champagne);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+}
+
+.location-subcard:hover {
+    background: #FFFFFF;
+    border-color: var(--color-maroon);
+    box-shadow: var(--shadow-subtle);
+}
+
+.location-subcard-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.location-icon-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid var(--color-maroon-border);
+    color: var(--color-maroon);
+    box-shadow: 0 2px 8px rgba(104, 26, 36, 0.1);
+}
+
+.church-badge {
+    color: var(--color-maroon);
+}
+
+.hall-badge {
+    color: var(--color-maroon);
+}
+
+.location-role-group {
+    flex: 1;
+}
+
+.location-role-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+    margin-bottom: 0.15rem;
+}
+
+.location-name {
+    font-family: var(--font-serif-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-title);
+    line-height: 1.25;
+}
+
+.location-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.92rem;
+    color: var(--color-text-body);
+}
+
+.location-time,
+.location-address {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.location-time svg,
+.location-address svg {
+    stroke: var(--color-maroon);
+    flex-shrink: 0;
+}
+
+.btn-map-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #FFFFFF;
+    color: var(--color-maroon);
+    border: 1px solid var(--color-maroon-border);
+    padding: 0.6rem 1.15rem;
+    border-radius: var(--radius-full);
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: var(--transition-smooth);
+    margin-top: auto;
+}
+
+.btn-map-link:hover {
+    background: var(--maroon-gradient);
+    color: #FFFFFF;
+    border-color: var(--color-maroon);
+    box-shadow: var(--shadow-maroon);
+    transform: translateY(-2px);
+}
+
+.btn-map-link svg {
+    stroke: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   12. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+    background: #FFFFFF;
+    border-top: 1px solid var(--color-maroon-border);
+    padding: 4.5rem 1.5rem 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--color-maroon);
+    background: var(--color-bg-champagne);
+    margin-bottom: 1.25rem;
+}
+
+.footer-monogram {
+    font-family: var(--font-serif-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-maroon);
+}
+
+.footer-couple-name {
+    font-family: var(--font-serif-heading);
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--color-text-title);
+    margin-bottom: 0.5rem;
+}
+
+.footer-message {
+    font-family: var(--font-serif-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+}
+
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-maroon-border), transparent);
+    margin: 2rem 0;
+}
+
+.footer-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.portal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--color-maroon);
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.portal-link:hover {
+    color: var(--color-maroon-light);
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   13. Back to Top Button
+   -------------------------------------------------------------------------- */
+.btn-back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-maroon);
+    color: var(--color-maroon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-maroon);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition-bounce);
+    z-index: 90;
+}
+
+.btn-back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btn-back-to-top:hover {
+    background: var(--maroon-gradient);
+    color: #FFFFFF;
+    transform: translateY(-3px);
+}
+
+/* --------------------------------------------------------------------------
+   14. Login Portal Page Styles
+   -------------------------------------------------------------------------- */
+.login-wrapper {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+}
+
+.login-card-container {
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+}
+
+.login-card {
+    text-align: center;
+    padding: 3rem 2.5rem;
+}
+
+.login-heading {
+    font-family: var(--font-serif-heading);
+    font-size: 1.85rem;
+    font-weight: 600;
+    color: var(--color-text-title);
+    margin-bottom: 0.5rem;
+}
+
+.login-subtext {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+}
+
+.alert-box {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.alert-error {
+    background: #FFF2F2;
+    color: #C53030;
+    border: 1px solid #FEB2B2;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-body);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    border: 1px solid var(--color-maroon-border);
+    border-radius: var(--radius-sm);
+    background: #FFFFFF;
+    color: var(--color-text-title);
+    transition: var(--transition-smooth);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-maroon);
+    box-shadow: 0 0 0 3px rgba(104, 26, 36, 0.15);
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper .form-input {
+    padding-right: 2.75rem;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0.35rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+    color: var(--color-maroon);
+    background-color: rgba(104, 26, 36, 0.06);
+}
+
+.password-toggle-btn:focus-visible {
+    outline: 2px solid var(--color-maroon);
+    outline-offset: 1px;
+}
+
+.password-toggle-btn .eye-icon {
+    display: block;
+    pointer-events: none;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 0.95rem;
+}
+
+.login-footer-links {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-maroon-border);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-maroon);
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.back-link:hover {
+    color: var(--color-maroon-light);
+}
+
+/* --------------------------------------------------------------------------
+   15. Responsive Media Queries
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .mobile-toggle {
+        display: flex;
+    }
+
+    .mobile-nav-drawer {
+        display: block;
+    }
+
+    .venues-dual-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-container::before {
+        left: 28px;
+    }
+
+    .timeline-badge-year {
+        width: 56px;
+        height: 56px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-cover-section {
+        padding: 4rem 1.5rem 2rem 1.5rem;
+        align-items: flex-end;
+    }
+
+    .hero-cover-image {
+        background-position: center 22%;
+    }
+
+    .hero-romantic-names {
+        font-size: clamp(3rem, 14vw, 4.4rem);
+        line-height: 1.05;
+        gap: 0;
+    }
+
+    .hero-romantic-names .hero-ampersand {
+        font-size: clamp(2.4rem, 10.5vw, 3.4rem);
+        margin: 0 0.5rem 0 0;
+    }
+
+    .hero-scroll-indicator {
+        bottom: 1rem;
+    }
+
+    .scroll-mouse {
+        width: 20px;
+        height: 30px;
+    }
+
+    .scroll-label {
+        font-size: 0.65rem;
+    }
+
+    .card-inner-frame {
+        padding: 2.25rem 1.25rem 2rem 1.25rem;
+    }
+
+    .partner-name {
+        font-size: 2.2rem;
+    }
+
+    .name-connector .ampersand {
+        font-size: 1.75rem;
+    }
+
+    .countdown-grid {
+        gap: 0.35rem;
+    }
+
+    .countdown-item {
+        min-width: 58px;
+    }
+
+    .countdown-value-box {
+        padding: 0.65rem 0.25rem;
+    }
+
+    .countdown-value {
+        font-size: 1.45rem;
+    }
+
+    .countdown-label {
+        font-size: 0.65rem;
+    }
+
+    .countdown-colon {
+        font-size: 1.15rem;
+    }
+
+    .card-corner svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .timeline-card {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .timeline-container::before {
+        display: none;
+    }
+
+    .timeline-content {
+        padding: 1.25rem;
+    }
+
+    .footer-bottom-row {
+        flex-direction: column;
+        text-align: center;
+    }
+}
