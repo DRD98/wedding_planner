@@ -1,13 +1,8 @@
-"""Django local settings for wedding-planner project."""
-
-# from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
-
 import environ
 
-from .base import *  # noqa: F405 F401 F403
+from .base import *
 
-# Read from environment variables file
 env = environ.Env()
 env.read_env(BASE_DIR / '.env')
 
@@ -16,10 +11,13 @@ ALLOWED_HOSTS = env.list(
     default=[""],
 )
 
+if "RENDER_EXTERNAL_HOSTNAME" in os.environ:
+    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",  # noqa: F405
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
