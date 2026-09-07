@@ -36,7 +36,7 @@
             <form method="post" action="{% url 'login' %}" class="login-form">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="id_username" class="form-label">Username or Email</label>
+                    <label for="id_username" class="form-label">Username</label>
                     <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="form-input" placeholder="Enter your username">
                 </div>
 

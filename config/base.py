@@ -23,6 +23,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 INSTALLED_APPS = [
     "users",
+    "invitees",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -92,3 +93,7 @@ USE_TZ = True
 
 TIME_ZONE = "UTC"
 DEBUG = True
+
+LOGIN_REDIRECT_URL = "/invitees/"
+LOGOUT_REDIRECT_URL = "/login/"
+LOGIN_URL = "/login/"

@@ -1,0 +1,117 @@
+{% extends "planner/base_planner.html" %}
+{% load static %}
+
+{% block title %}Wedding Budget — Alex &amp; Divya Wedding{% endblock %}
+
+{% block content %}
+<div class="planner-page-container">
+    <!-- Top Bar -->
+    <div class="page-top-bar">
+        <div class="page-title-group">
+            <div class="page-badge">Financial Overview</div>
+            <h1 class="page-title">Wedding Budget &amp; Expenses</h1>
+            <p class="page-subtitle">Track estimated costs, actual contracts, and paid installments across all celebration categories.</p>
+        </div>
+        <div class="page-actions">
+            <button type="button" class="btn btn-primary" onclick="showToast('Budget item creator coming soon! Categorization is currently active.')">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add Expense Item</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Metrics Cards Grid -->
+    <div class="metrics-grid">
+        <div class="metric-card metric-primary">
+            <div class="metric-header">
+                <span class="metric-label">Estimated Budget</span>
+                <span class="metric-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                </span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value">${{ estimated_total|floatformat:0 }}</div>
+                <div class="metric-unit">target</div>
+            </div>
+            <div class="metric-subtext">Total estimated budget for all ceremonies</div>
+        </div>
+
+        <div class="metric-card metric-divya">
+            <div class="metric-header">
+                <span class="metric-label">Booked &amp; Contracted</span>
+                <span class="metric-pill pill-divya">Actual</span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value">${{ actual_total|floatformat:0 }}</div>
+                <div class="metric-unit">committed</div>
+            </div>
+            <div class="metric-subtext">85.5% of total estimated allocation</div>
+        </div>
+
+        <div class="metric-card metric-alex">
+            <div class="metric-header">
+                <span class="metric-label">Paid to Date</span>
+                <span class="metric-pill pill-alex">Completed</span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value">${{ paid_total|floatformat:0 }}</div>
+                <div class="metric-unit">disbursed</div>
+            </div>
+            <div class="metric-subtext">${{ actual_total|add:"-24200"|floatformat:0 }} remaining to be paid</div>
+        </div>
+    </div>
+
+    <!-- Budget Category Breakdown Cards -->
+    <div class="table-card" style="margin-top: 2rem;">
+        <div class="card-header-bar">
+            <h3 class="card-title">Category Allocations</h3>
+            <span class="card-subtitle">Detailed breakdown by wedding vendor and event stream</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="invitees-table budget-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Estimated</th>
+                        <th>Actual Contract</th>
+                        <th>Paid</th>
+                        <th>Remaining</th>
+                        <th>Progress</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                    <tr>
+                        <td>
+                            <div class="category-name-cell">
+                                <span class="category-icon-bullet"></span>
+                                <strong class="category-title">{{ cat.name }}</strong>
+                            </div>
+                        </td>
+                        <td class="fw-semibold text-muted">${{ cat.estimated }}</td>
+                        <td><strong class="text-dark">${{ cat.actual }}</strong></td>
+                        <td><span class="badge-paid">${{ cat.paid }}</span></td>
+                        <td><span class="text-danger fw-semibold">${{ cat.actual|add:"-1000"|default:"0" }}</span></td>
+                        <td style="min-width: 140px;">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 65%;"></div>
+                            </div>
+                        </td>
+                        <td class="text-muted"><small>{{ cat.notes }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
