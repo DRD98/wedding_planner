@@ -1,0 +1,405 @@
+{% extends "planner/base_planner.html" %}
+{% load static %}
+
+{% block title %}Invitees Management — Alex &amp; Divya Wedding{% endblock %}
+
+{% block content %}
+<div class="planner-page-container">
+    <!-- Top Bar with Title and Add Action -->
+    <div class="page-top-bar">
+        <div class="page-title-group">
+            <div class="page-badge">Guest List Management</div>
+            <h1 class="page-title">Wedding &amp; Engagement Invitees</h1>
+            <p class="page-subtitle">Track, filter, and curate attendees across sides and family connections.</p>
+        </div>
+        <div class="page-actions">
+            <button type="button" class="btn btn-primary" id="openAddModalBtn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add Invitee</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Metrics Cards Grid -->
+    <div class="metrics-grid">
+        <!-- Total Guests Card -->
+        <div class="metric-card metric-primary">
+            <div class="metric-header">
+                <span class="metric-label">Total Guest Headcount</span>
+                <span class="metric-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value" id="metricTotalGuests">{{ total_guests }}</div>
+                <div class="metric-unit">seats</div>
+            </div>
+            <div class="metric-subtext">Across <span id="metricTotalInvitees" class="fw-semibold">{{ total_invitees }}</span> invitee entries / invitations</div>
+        </div>
+
+        <!-- Divya's Side Card -->
+        <div class="metric-card metric-divya">
+            <div class="metric-header">
+                <span class="metric-label">Divya's Side</span>
+                <span class="metric-pill pill-divya">Bride Side</span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value" id="metricDivyaGuests">{{ divya_guests }}</div>
+                <div class="metric-unit">guests</div>
+            </div>
+            <div class="metric-subtext"><span id="metricDivyaInvitees" class="fw-semibold">{{ divya_invitees }}</span> invitations allocated</div>
+        </div>
+
+        <!-- Alex's Side Card -->
+        <div class="metric-card metric-alex">
+            <div class="metric-header">
+                <span class="metric-label">Alex's Side</span>
+                <span class="metric-pill pill-alex">Groom Side</span>
+            </div>
+            <div class="metric-value-row">
+                <div class="metric-value" id="metricAlexGuests">{{ alex_guests }}</div>
+                <div class="metric-unit">guests</div>
+            </div>
+            <div class="metric-subtext"><span id="metricAlexInvitees" class="fw-semibold">{{ alex_invitees }}</span> invitations allocated</div>
+        </div>
+    </div>
+
+    <!-- Relationship Breakdown Pills Container -->
+    <div class="relations-summary-card">
+        <div class="relations-title">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Relationship Group Summaries:</span>
+        </div>
+        <div class="relation-tags-list">
+            {% for rel in relationships_data %}
+            <div class="relation-stat-tag tag-{{ rel.code }}">
+                <span class="stat-name">{{ rel.label }}</span>
+                <span class="stat-count" id="statRelCount-{{ rel.code }}">{{ rel.count }} inv / {{ rel.guests }} seats</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Filtering & Control Toolbar -->
+    <div class="filter-toolbar-card">
+        <div class="toolbar-section search-section">
+            <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="inviteeSearchInput" class="search-input" placeholder="Search by name, contact, notes..." autocomplete="off">
+                <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Clear search" style="display: none;">&times;</button>
+            </div>
+        </div>
+
+        <div class="toolbar-section filters-section">
+            <!-- Filter by Side -->
+            <div class="filter-group">
+                <span class="filter-group-label">Side:</span>
+                <div class="filter-pills" id="sideFilterGroup" role="radiogroup" aria-label="Filter by Side">
+                    <button type="button" class="filter-pill active" data-side="all" aria-checked="true">
+                        <span>All Sides</span>
+                        <span class="pill-count" id="filterCountAll">{{ total_invitees }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-side-alex" data-side="alex" aria-checked="false">
+                        <span class="side-dot dot-alex"></span>
+                        <span>Alex</span>
+                        <span class="pill-count" id="filterCountAlex">{{ alex_invitees }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-side-divya" data-side="divya" aria-checked="false">
+                        <span class="side-dot dot-divya"></span>
+                        <span>Divya</span>
+                        <span class="pill-count" id="filterCountDivya">{{ divya_invitees }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter by Relationship -->
+            <div class="filter-group">
+                <span class="filter-group-label">Relationship:</span>
+                <div class="filter-pills" id="relFilterGroup" role="radiogroup" aria-label="Filter by Relationship">
+                    <button type="button" class="filter-pill active" data-rel="all" aria-checked="true">
+                        <span>All</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-rel-divya" data-rel="divya" aria-checked="false">
+                        <span>Divya</span>
+                        <span class="pill-count" id="filterRelDivya">{{ relationships_data.0.count }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-rel-daisy" data-rel="daisy" aria-checked="false">
+                        <span>Daisy</span>
+                        <span class="pill-count" id="filterRelDaisy">{{ relationships_data.1.count }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-rel-davis" data-rel="davis" aria-checked="false">
+                        <span>Davis</span>
+                        <span class="pill-count" id="filterRelDavis">{{ relationships_data.2.count }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-rel-diya" data-rel="diya" aria-checked="false">
+                        <span>Diya</span>
+                        <span class="pill-count" id="filterRelDiya">{{ relationships_data.3.count }}</span>
+                    </button>
+                    <button type="button" class="filter-pill pill-rel-alex" data-rel="alex" aria-checked="false">
+                        <span>Alex</span>
+                        <span class="pill-count" id="filterRelAlex">{{ relationships_data.4.count }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" id="resetFiltersBtn" class="btn btn-secondary btn-sm" title="Reset all filters" style="display: none;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span>Reset</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Live Dynamic Selection Total Count Banner -->
+    <div class="dynamic-count-banner" id="dynamicCountBanner">
+        <div class="banner-left">
+            <div class="banner-pulse"></div>
+            <span class="banner-text">
+                Showing <strong id="dynamicFilterCount">{{ total_invitees }}</strong> invitees 
+                (<strong id="dynamicGuestCount">{{ total_guests }}</strong> total seats/guests)
+            </span>
+            <span class="active-filter-indicators" id="activeFilterIndicators"></span>
+        </div>
+        <div class="banner-right">
+            <button type="button" class="btn-text-action" id="expandAllNotesBtn">Toggle Notes</button>
+        </div>
+    </div>
+
+    <!-- Main Invitees Table Card -->
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="invitees-table" id="inviteesTable">
+                <thead>
+                    <tr>
+                        <th class="col-name">Invitee Name</th>
+                        <th class="col-side">Side</th>
+                        <th class="col-relation">Relationship</th>
+                        <th class="col-guests text-center">Guest Count</th>
+                        <th class="col-events">Events</th>
+                        <th class="col-actions text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inviteesTableBody">
+                    {% for inv in invitees %}
+                    <tr class="invitee-row" 
+                        data-id="{{ inv.id }}" 
+                        data-name="{{ inv.name|lower }}" 
+                        data-side="{{ inv.side }}" 
+                        data-rel="{{ inv.relationship }}" 
+                        data-guests="{{ inv.guest_count }}">
+                        
+                        <!-- Name & Avatar -->
+                        <td class="col-name">
+                            <div class="guest-identity">
+                                <div class="guest-avatar avatar-{{ inv.side }}">
+                                    {{ inv.name|make_list|first|upper }}
+                                </div>
+                                <div class="guest-name-info">
+                                    <span class="guest-name">{{ inv.name }}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Side Badge -->
+                        <td class="col-side">
+                            <span class="side-badge badge-{{ inv.side }}">
+                                <span class="badge-dot"></span>
+                                <span>{{ inv.get_side_display }}</span>
+                            </span>
+                        </td>
+
+                        <!-- Relationship Badge -->
+                        <td class="col-relation">
+                            <span class="rel-badge badge-rel-{{ inv.relationship }}">
+                                {{ inv.get_relationship_display }}
+                            </span>
+                        </td>
+
+                        <!-- Guest Count -->
+                        <td class="col-guests text-center">
+                            <div class="guest-count-pill" title="{{ inv.guest_count }} guest(s)">
+                                <span class="guest-count-val">{{ inv.guest_count }}</span>
+                                <span class="guest-count-label">seat{{ inv.guest_count|pluralize }}</span>
+                            </div>
+                        </td>
+
+                        <!-- Events Invited -->
+                        <td class="col-events">
+                            <span class="event-tag tag-event-{{ inv.events_invited }}">
+                                {{ inv.get_events_invited_display }}
+                            </span>
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="col-actions text-end">
+                            <div class="action-buttons-group">
+                                <button type="button" class="btn-action btn-edit" title="Edit Invitee" onclick="openEditModal({{ inv.id }})">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn-action btn-delete" title="Delete Invitee" onclick="confirmDeleteInvitee({{ inv.id }}, '{{ inv.name|escapejs }}')">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr id="initialEmptyRow">
+                        <td colspan="7" class="empty-table-cell">
+                            <div class="empty-state-box">
+                                <div class="empty-icon-circle">
+                                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <h3>No Invitees Added Yet</h3>
+                                <p>Begin building your wedding guest list by adding your first invitee.</p>
+                                <button type="button" class="btn btn-primary" onclick="openAddModal()">+ Add First Invitee</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Filter Empty State (Hidden when rows exist) -->
+        <div class="filter-empty-state" id="filterEmptyState" style="display: none;">
+            <div class="empty-icon-circle">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <h4>No Invitees Match Selected Filters</h4>
+            <p>Try resetting filters or adjusting your search keywords.</p>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="resetAllFilters()">Reset All Filters</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== ADD / EDIT INVITEE MODAL ==================== -->
+<div class="modal-backdrop" id="inviteeModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+            <div class="modal-title-group">
+                <span class="modal-badge" id="modalBadge">Guest List</span>
+                <h3 class="modal-title" id="modalTitle">Add New Invitee</h3>
+            </div>
+            <button type="button" class="modal-close-btn" id="closeModalBtn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <form id="inviteeForm" method="post" action="{% url 'invitee_create' %}" class="modal-form">
+            {% csrf_token %}
+            <input type="hidden" id="inviteeId" name="invitee_id" value="">
+
+            <div class="modal-body">
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="id_name" class="form-label">Full Name or Family Group <span class="required-star">*</span></label>
+                    <input type="text" name="name" id="id_name" class="form-input" placeholder="e.g., Uncle Davis &amp; Family or Daisy Mathew" required>
+                </div>
+
+                <!-- Side & Relationship (2 Columns) -->
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="id_side" class="form-label">Whose Side? <span class="required-star">*</span></label>
+                        <select name="side" id="id_side" class="form-select" required>
+                            <option value="divya" selected>Divya (Bride Side)</option>
+                            <option value="alex">Alex (Groom Side)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_relationship" class="form-label">Relationship / Connected To <span class="required-star">*</span></label>
+                        <select name="relationship" id="id_relationship" class="form-select" required>
+                            <option value="divya" selected>Divya</option>
+                            <option value="daisy">Daisy</option>
+                            <option value="davis">Davis</option>
+                            <option value="diya">Diya</option>
+                            <option value="alex">Alex</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Guest Count & Events (2 Columns) -->
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="id_guest_count" class="form-label">Allocated Seats / Guests <span class="required-star">*</span></label>
+                        <div class="guest-stepper-wrapper">
+                            <button type="button" class="stepper-btn" onclick="stepGuestCount(-1)" aria-label="Decrease guest count">-</button>
+                            <input type="number" name="guest_count" id="id_guest_count" class="form-input text-center stepper-input" min="1" max="99" value="1" required>
+                            <button type="button" class="stepper-btn" onclick="stepGuestCount(1)" aria-label="Increase guest count">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_events_invited" class="form-label">Events Invited</label>
+                        <select name="events_invited" id="id_events_invited" class="form-select">
+                            <option value="all" selected>All Events (Engagement &amp; Wedding)</option>
+                            <option value="engagement">Engagement Only</option>
+                            <option value="wedding">Wedding Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveInviteeSubmitBtn">
+                    <span id="submitBtnText">Save Invitee</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
+<div class="modal-backdrop" id="deleteModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sm" role="dialog" aria-modal="true">
+        <div class="modal-header">
+            <h3 class="modal-title text-danger">Delete Invitee</h3>
+            <button type="button" class="modal-close-btn" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to remove <strong id="deleteInviteeName"></strong> from the guest list? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <form id="deleteForm" method="post" action="">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Delete Invitee</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/planner_invitees.js' %}"></script>
+{% endblock %}
