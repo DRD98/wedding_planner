@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ bride.name }} &amp; {{ groom.name }} — Betrothal &amp; Wedding Invitation Card</title>
+    <link rel="icon" type="image/png" href="{% static 'images/webpage-logo.png' %}">
+    <meta name="description"
+        content="Betrothal Ceremony of {{ bride.name }} and {{ groom.name }} on {{ event.day_name }}, {{ event.day }} {{ event.month }} {{ event.year }} at {{ event.church_name }} {{ event.church_place }}.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allura&family=Italianno&family=MonteCarlo&family=Parisienne&family=Great+Vibes&family=Alex+Brush&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700;1,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/invitation_card.css' %}">
+</head>
+
+<body class="card-view-body">
+
+    <!-- Top Action Bar -->
+    <div class="card-action-bar">
+        <div class="action-bar-left">
+            <a href="{% url 'landing_page' %}" class="card-btn" id="homeBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Wedding Website</span>
+            </a>
+        </div>
+        <div class="action-bar-right">
+            <button class="card-btn" id="copyLinkBtn" onclick="copyCardLink()" aria-label="Copy invitation link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copyBtnText">Share Link</span>
+            </button>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Betrothal+Ceremony:+Blessy+%26+Manu&dates=20260919T053000Z/20260919T083000Z&details=Betrothal+Ceremony+at+St.+Mary%27s+Forane+Church,+Puthenchira+followed+by+Reception+at+Jubilee+Hall&location=St.+Mary%27s+Forane+Church,+Puthenchira"
+                target="_blank" rel="noopener noreferrer" class="card-btn" id="calendarBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Add to Calendar</span>
+            </a>
+            <button class="card-btn card-btn-primary" onclick="window.print()" id="printBtn"
+                aria-label="Print invitation card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                <span>Print / Save PDF</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- The Invitation Card Frame -->
+    <main class="invitation-card-stage">
+        <article class="real-invitation-card" id="invitationCard" itemscope itemtype="https://schema.org/Event">
+
+            <!-- Watercolor Floral Corners -->
+            <div class="floral-corner floral-corner-tl" style="background-image: url('{% static "images/card/floral_corner.png" %}');" aria-hidden="true"></div>
+            <div class="floral-corner floral-corner-tr" style="background-image: url('{% static "images/card/floral_corner.png" %}');" aria-hidden="true"></div>
+            <div class="floral-corner floral-corner-bl" style="background-image: url('{% static "images/card/floral_corner.png" %}');" aria-hidden="true"></div>
+            <div class="floral-corner floral-corner-br" style="background-image: url('{% static "images/card/floral_corner.png" %}');" aria-hidden="true"></div>
+
+            <div class="gold-outer-frame">
+                <div class="gold-inner-frame">
+
+                    <!-- Header: Bible Quote -->
+                    <section class="card-quote-block" aria-label="Scripture Verse">
+                        <p class="quote-verse">“I have found the one whom my soul loves...”</p>
+                        <p class="quote-reference">Song of Solomon 3:4</p>
+                    </section>
+
+                    <!-- Header: Parents Details -->
+                    <header class="card-header-block">
+                        <h1 class="parents-names">{{ parents.title }}</h1>
+                        <p class="parents-house">{{ parents.house }}</p>
+                        <p class="parents-address">{{ parents.address }}</p>
+                    </header>
+
+                    <!-- Cordial Invitation Line -->
+                    <section class="invitation-callout-block">
+                        <p class="cordially-invite">{{ invitation_lines.cordial }}</p>
+                        <p class="occasion-text-1">{{ invitation_lines.grace }}</p>
+                        <p class="occasion-text-2">{{ invitation_lines.ceremony }}</p>
+                    </section>
+
+                    <!-- Couple Names & Watercolor Artwork -->
+                    <section class="couple-main-section">
+                        <div class="couple-details-left">
+                            <h2 class="bride-name" itemprop="performer">{{ bride.name }}</h2>
+
+                            <!-- Interlocking Rings / Hearts -->
+                            <div class="interlocking-rings-wrap" aria-hidden="true">
+                                <svg class="interlocking-rings-svg" viewBox="0 0 48 32" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 6 C10 0, 2 6, 8 16 C14 26, 20 28, 20 28 C20 28, 26 26, 32 16 C38 6, 30 0, 24 6 C20 10, 20 10, 16 6 Z"
+                                        fill="none" stroke="#C8A14E" />
+                                    <path
+                                        d="M28 10 C24 4, 18 8, 22 16 C26 24, 30 26, 30 26 C30 26, 34 24, 38 16 C42 8, 36 4, 32 10"
+                                        fill="none" stroke="#D4AF37" />
+                                </svg>
+                            </div>
+
+                            <h2 class="groom-name" itemprop="performer">{{ groom.name }}</h2>
+
+                            <div class="groom-parents-block">
+                                <p class="groom-relation-line">{{ groom.relation }}</p>
+                                <p class="groom-relation-line">{{ groom.mother }}</p>
+                                <p class="groom-relation-line">{{ groom.house }}</p>
+                                <p class="groom-relation-line">{{ groom.location }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Romantic Watercolor Couple Illustration -->
+                        <div class="couple-artwork-right" aria-hidden="true">
+                            <img src="{% static 'images/card/couple_watercolor.png' %}"
+                                alt="Watercolor bride and groom illustration" class="couple-art-img" width="200"
+                                height="280">
+                        </div>
+                    </section>
+
+                    <!-- Three-Column Event Grid (Date, Church, Reception) -->
+                    <section class="ceremony-grid-row">
+                        <!-- Column 1: Calendar Date -->
+                        <div class="ceremony-col">
+                            <div class="venue-icon-wrap">
+                                {% include "card_images/calender_gold.svg" %}
+                            </div>
+                            <div class="cal-year">{{ event.month }} {{ event.day }}, {{ event.year }}</div>
+                            <div class="cal-day-label">{{ event.day_name }}</div>
+                            <div class="cal-time-label">at {{ event.time }}</div>
+                        </div>
+
+                        <!-- Column 2: Church Venue -->
+                        <div class="ceremony-col">
+                            <div class="reception-header-top">
+                                <!-- QR Code -->
+                                <div class="reception-qr-code" title="Scan for Location">
+                                    {% include "card_images/qr-code-church.svg" %}
+                                </div>
+                                <div class="venue-icon-wrap" aria-hidden="true" style="margin-bottom:0;">
+                                    {% include "card_images/church_gold.svg" %}
+                                </div>
+                            </div>
+                            <p class="venue-title-bold">{{ event.church_name }}</p>
+                            <p class="venue-place">{{ event.church_place }}</p>
+                        </div>
+
+                        <!-- Column 3: Reception Venue & QR Code -->
+                        <div class="ceremony-col">
+                            <div class="reception-header-top">
+                                <div class="venue-icon-wrap" aria-hidden="true" style="margin-bottom:0;">
+                                    {% include "card_images/lunch_gold.svg" %}
+                                </div>
+                                <!-- QR Code -->
+                                <div class="reception-qr-code" title="Scan for Location">
+                                    {% include "card_images/qr-code-reception.svg" %}
+                                </div>
+                            </div>
+                            <p class="reception-intro">{{ event.reception_title }}</p>
+                            <p class="venue-title-bold">{{ event.reception_hall }}</p>
+                            <p class="venue-place">{{ event.reception_place }}</p>
+                        </div>
+                    </section>
+
+                    <!-- Golden Line Divider -->
+                    <div class="golden-line-divider" aria-hidden="true"></div>
+
+                    <!-- Solemnization Announcement -->
+                    <section class="solemnization-block">
+                        <p class="solemnization-line">{{ marriage.line1 }}</p>
+                        <p class="solemnization-line">{{ marriage.line2 }}</p>
+                        <p class="solemnization-line">{{ marriage.line3 }}</p>
+                    </section>
+
+                    <!-- Golden Line Divider -->
+                    <div class="golden-line-divider" aria-hidden="true"></div>
+
+                    <!-- Sharing Happiness -->
+                    <footer class="sharing-happiness-block">
+                        <p class="sharing-heading">{{ sharing.heading }}</p>
+                        <p class="sharing-names">{{ sharing.names }}</p>
+                    </footer>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- JavaScript for Interactive Features -->
+    <script>
+        function copyCardLink() {
+            const url = window.location.href;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    const btnText = document.getElementById('copyBtnText');
+                    const orig = btnText.textContent;
+                    btnText.textContent = 'Link Copied!';
+                    setTimeout(() => {
+                        btnText.textContent = orig;
+                    }, 2500);
+                }).catch(() => {
+                    prompt('Copy this link:', url);
+                });
+            } else {
+                prompt('Copy this link:', url);
+            }
+        }
+    </script>
+</body>
+
+</html>

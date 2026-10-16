@@ -6,11 +6,12 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from core.views import landing_page
+from core.views import invitation_card_view, landing_page
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", landing_page, name="landing_page"),
+    path("invitation-card/", invitation_card_view, name="invitation_card"),
     path("login/", auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("invitees/", include("invitees.urls")),
