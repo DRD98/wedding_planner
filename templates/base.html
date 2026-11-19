@@ -33,7 +33,7 @@
     <header class="site-header" id="siteHeader">
         <div class="header-container">
             <a href="{% url 'landing_page' %}" class="monogram-logo" aria-label="Couple Monogram">
-                <span class="monogram-frame">{{ couple.monogram|default:"A & D" }}</span>
+                <span class="monogram-frame">{{ couple.monogram|default:"D & A" }}</span>
             </a>
 
             <nav class="desktop-nav" aria-label="Main Navigation">
@@ -41,7 +41,6 @@
                     <li><a href="#cover" class="nav-link">Home</a></li>
                     <li><a href="#invitation" class="nav-link">Invitation</a></li>
                     <li><a href="#story" class="nav-link">Our Story</a></li>
-                    <li><a href="#schedule" class="nav-link">Schedule</a></li>
                     <li><a href="#venues" class="nav-link">Venues</a></li>
                 </ul>
             </nav>
@@ -66,12 +65,11 @@
         <!-- Mobile Navigation Menu Drawer -->
         <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
             <div class="mobile-nav-inner">
-                <div class="mobile-monogram">{{ couple.monogram|default:"A & D" }}</div>
+                <div class="mobile-monogram">{{ couple.monogram|default:"D & A" }}</div>
                 <ul class="mobile-links">
                     <li><a href="#cover" class="mobile-link">Home</a></li>
                     <li><a href="#invitation" class="mobile-link">Invitation</a></li>
                     <li><a href="#story" class="mobile-link">Our Story</a></li>
-                    <li><a href="#schedule" class="mobile-link">Schedule</a></li>
                     <li><a href="#venues" class="mobile-link">Venues</a></li>
                 </ul>
                 <div class="mobile-drawer-footer">

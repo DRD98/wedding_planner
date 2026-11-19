@@ -146,18 +146,18 @@
                             </div>
                             <div class="cal-year">{{ event.month }} {{ event.day }}, {{ event.year }}</div>
                             <div class="cal-day-label">{{ event.day_name }}</div>
-                            <div class="cal-time-label">at {{ event.time }}</div>
+                            <div class="venue-place">at {{ event.time }}</div>
                         </div>
 
                         <!-- Column 2: Church Venue -->
                         <div class="ceremony-col">
                             <div class="reception-header-top">
+                                <div class="venue-icon-wrap" aria-hidden="true" style="margin-bottom:0;">
+                                    {% include "card_images/church_gold.svg" %}
+                                </div>
                                 <!-- QR Code -->
                                 <div class="reception-qr-code" title="Scan for Location">
                                     {% include "card_images/qr-code-church.svg" %}
-                                </div>
-                                <div class="venue-icon-wrap" aria-hidden="true" style="margin-bottom:0;">
-                                    {% include "card_images/church_gold.svg" %}
                                 </div>
                             </div>
                             <p class="venue-title-bold">{{ event.church_name }}</p>
