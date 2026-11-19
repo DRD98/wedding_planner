@@ -5,9 +5,9 @@ def invitation_card_view(request):
     """Render the digital wedding invitation card."""
     context = {
         "parents": {
-            "title": "Mr. Davis Mavely & Mrs. Daisy Davis",
-            "house": "Mavely House",
-            "address": "Karukutty, Ernakulam District",
+            "title": "Mrs. Daisy Davis & Mr. Mavely Anthappan Davis",
+            # "address": "Karukutty, Ernakulam District",
+            "house": "Mavely House, Karukutty, Ernakulam District",
         },
         "invitation_lines": {
             "cordial": "CORDIALLY INVITE YOU",
@@ -19,8 +19,8 @@ def invitation_card_view(request):
         },
         "groom": {
             "name": "Alexius Varghese Bennette",
-            "relation": "(S/o. Mr. Joseph Bennette C V &",
-            "mother": "Mrs. Victoria Carol M J",
+            "relation": "(S/o. Mrs. Victoria Carol M J &",
+            "mother": "Mr. Joseph Bennette C V",
             "house": "Cocheril House",
             "location": "Palarivattom, Ernakulam District)",
         },
@@ -33,15 +33,15 @@ def invitation_card_view(request):
             "church_name": "St. Francis Xavier's Forane Church",
             "church_place": "Karukutty",
             "church_maps_url": "https://maps.google.com/?q=St+Marys+Forane+Church+Puthenchira",
-            "reception_title": "Reception at",
-            "reception_hall": "La Mirage,",
-            "reception_place": "Koratty",
+            "reception_title": "Reception",
+            "reception_hall": "La Mirage, Koratty",
+            "reception_place": "(12 noon onwards)",
             "reception_maps_url": "https://maps.google.com/?q=Jubilee+Hall+Puthenchira",
         },
         "marriage": {
             "line1": "Marriage will be solemnized at",
-            "line2": "St. Francis Xavier's Roman Catholic Church, Kaloor, Ernakulam",
-            "line3": "on Sunday 24th January 2027 at 4.00 pm",
+            "line2": "St John the Baptist Church, Palarivattom, Ernakulam",
+            "line3": "on Sunday 24th January 2027 at 3.30 pm",
         },
         "sharing": {
             "heading": "Sharing the Happiness:",
